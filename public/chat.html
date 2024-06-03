@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat WebSocket</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // Funcție pentru trimiterea mesajelor la server
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            socket.emit('chat message', message);
+            document.getElementById('message').value = '';
+        }
+
+        // Ascultă evenimentul de primire a mesajelor de la server
+        socket.on('chat message', (msg) => {
+            const messages = document.getElementById('messages');
+            const li = document.createElement('li');
+            li.textContent = msg;
+            messages.appendChild(li);
+        });
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <!-- Titlu în stânga -->
+            <a class="navbar-brand" href="/lista-carti">Recenzii Carti</a>
+
+            <!-- Butonul de comutare pentru dispozitive mobile -->
+            <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Elementele navbar-ului -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- Linkuri în dreapta -->
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/lista-carti">Carti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/chat">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Deconectare</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var menuOpen = false;
+            $(".navbar-toggler").click(function(){
+                if(menuOpen) {
+                    $(".navbar-collapse").collapse('hide');
+                    menuOpen = false;
+                } else {
+                    $(".navbar-collapse").collapse('show');
+                    menuOpen = true;
+                }
+            });
+        });
+    </script>
+
+<div class="container">
+    <div class="chat-container">
+        <ul class="chat-messages" id="chat-messages">
+            <!-- Mesajele vor fi afișate aici -->
+        </ul>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Username" id="username">
+            <input type="text" class="form-control" placeholder="Mesaj..." id="message">
+            <button class="btn btn-primary" onclick="sendMessage()">Trimite</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Funcție pentru trimiterea mesajelor
+    function sendMessage() {
+        const username = document.getElementById('username').value;
+        const message = document.getElementById('message').value;
+        const chatMessages = document.getElementById('chat-messages');
+        const li = document.createElement('li');
+        li.className = 'chat-message';
+        li.innerHTML = `<strong>${username}:</strong> ${message}`;
+        chatMessages.appendChild(li);
+        // Șterge textul din câmpul de mesaj după trimitere
+        document.getElementById('message').value = '';
+        // Derulează în jos pentru a afișa ultimul mesaj trimis
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+</script>
+</body>
+</html>

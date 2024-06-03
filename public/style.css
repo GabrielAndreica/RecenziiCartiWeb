@@ -1,0 +1,35 @@
+        /* Stiluri pentru footer */
+        footer {
+            background-color: #151414 !important;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Stiluri pentru linkuri din footer */
+        footer a {
+            color: #ffc107;
+            text-decoration: none;
+        }
+
+        /* Stil pentru hover pe linkuri din footer */
+        footer a:hover {
+            color: #fff;
+        }
+
+        /*BUTOANE*/
+        .btn-custom{
+            margin-top: 30px;
+            background-color: #ffc107;
+          }
+          .btn-custom2{
+            background-color: transparent;
+            border: 1px solid black;
+          }
+
+          .containerCustom{
+            padding-bottom: 10%;
+          }

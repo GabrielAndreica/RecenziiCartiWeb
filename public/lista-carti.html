@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magazin Online</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <!-- Titlu în stânga -->
+            <a class="navbar-brand" href="/lista-carti">Recenzii Carti</a>
+
+            <!-- Butonul de comutare pentru dispozitive mobile -->
+            <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Elementele navbar-ului -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- Linkuri în dreapta -->
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/lista-carti">Carti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/chat">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Deconectare</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var menuOpen = false;
+            $(".navbar-toggler").click(function(){
+                if(menuOpen) {
+                    $(".navbar-collapse").collapse('hide');
+                    menuOpen = false;
+                } else {
+                    $(".navbar-collapse").collapse('show');
+                    menuOpen = true;
+                }
+            });
+        });
+    </script>
+
+    <div class="container">
+        <div class="row mt-4">
+            <!-- Sidebar pentru categorii -->
+            <div class="col-md-3">
+                <h4>Categorii</h4>
+                <!-- Butonul responsive pentru afișarea listei de categorii -->
+                <button class="btn btn-primary d-md-none mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCategories" aria-expanded="false" aria-controls="collapseCategories">
+                    Categorii
+                </button>
+                <!-- Lista de categorii -->
+                <div class="collapse d-md-block" id="collapseCategories">
+                    <button type="button" class="btn btn-custom2 mb-2 filter-btn" data-categorie="Ficțiune">Ficțiune</button>
+                    <button type="button" class="btn btn-custom2 mb-2 filter-btn" data-categorie="Non-Ficțiune">Non-Ficțiune</button>
+                    <button type="button" class="btn btn-custom2 mb-2 filter-btn" data-categorie="Copii">Copii</button>
+                    <button type="button" class="btn btn-custom2 mb-2 filter-btn" data-categorie="Toate">Toate</button>
+                </div>
+            </div>
+
+            <!-- Zona principală pentru produse -->
+            <div class="col-md-9 containerCustom">
+
+                <!-- Rând de produse -->
+                <div class="row" id="containerCarti">
+                    
+                </div>
+                <!-- Mai multe rânduri de produse pot fi adăugate aici -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Funcția pentru afișarea cărților
+            function displayCarti(carti) {
+                const containerCarti = document.getElementById('containerCarti');
+                containerCarti.innerHTML = '';
+                carti.forEach(carte => {
+                    const cardHTML = `
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <img src="${carte.imagine}" class="card-img-top" alt="${carte.titlu}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${carte.titlu}</h5>
+                                    <p class="card-text">${carte.autor}</p>
+                                    <a href="/carte/${carte._id}" class="btn btn-custom">Vezi cartea</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    containerCarti.insertAdjacentHTML('beforeend', cardHTML);
+                });
+            }
+
+            // Funcția pentru obținerea cărților cu filtrare
+            function fetchCarti(categorie) {
+                let url = '/api/carti';
+                if (categorie && categorie !== 'Toate') {
+                    url += `?categorie=${categorie}`;
+                }
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        displayCarti(data);
+                    })
+                    .catch(error => console.error('Eroare la obținerea cărților:', error));
+            }
+
+            // Inițial, afișează toate cărțile
+            fetchCarti();
+
+            // Adaugă evenimente de click pentru butoanele de categorie
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const categorie = this.getAttribute('data-categorie');
+                    fetchCarti(categorie);
+                });
+            });
+        });
+    </script>
+
+    <footer>
+        <div class="container">
+            <p>2024 Proiect Programare Web.</p>
+            <p>Realizat de <a href="#" target="_blank">Gabriel-Ioan Andreica</a></p>
+        </div>
+    </footer>
+</body>
+</html>

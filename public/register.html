@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Înregistrare</title>
+    <!-- Link către biblioteca Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="style-register.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-6 offset-md-3 register-container">
+                <h2 class="text-center mb-4">Înregistrare</h2>
+                <form action="/register" method="POST">
+                    <div class="form-group">
+                        <label for="username">Nume de utilizator</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Introduceți numele de utilizator">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Adresă de email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Introduceți adresa de email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Parolă</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Introduceți parola">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmare parolă</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirmați parola">
+                    </div>
+                    <button type="submit" class="btn btn-custom btn-block">Înregistrare</button>
+                    <a href="/login" class="btn btn-custom2 btn-block">Logare</a>
+                </form>
+        </div>
+    </div>
+
+    <footer>
+        2024 Proiect Programare Web. Realizat de Gabriel-Ioan Andreica.</p>
+      </footer>
+
+    <!-- Scripturi JavaScript necesare pentru Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
